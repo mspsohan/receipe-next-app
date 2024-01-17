@@ -5,9 +5,8 @@ const fetcher = async (url) => {
    const res = await fetch(url, { cache: "no-store" });
    return res.json();
 };
-
-export const getAllReceipe = (search) => {
-   const { data, error, isLoading, revalidate } = useSWR(
+export const getAllReceipe = (search = "") => {
+   const { data, error, isLoading } = useSWR(
       `https://receipe-server.vercel.app/receipe?search=${search}`,
       fetcher,
       {
@@ -15,8 +14,8 @@ export const getAllReceipe = (search) => {
       }
    );
 
-   const handleRefresh = () => {
-      revalidate();
+   const handleRefresh = async () => {
+      await mutate(`https://receipe-server.vercel.app/receipe?search=${search}`);
    };
 
    if (error) return <div>Error loading data</div>;

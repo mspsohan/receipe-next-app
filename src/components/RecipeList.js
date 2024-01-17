@@ -12,11 +12,11 @@ import { useState } from "react";
 const RecipeList = () => {
    const [search, setSearch] = useState('');
 
-   const { data: recipes, handleRefresh } = getAllReceipe();
+   const { data: receipes, handleRefresh } = getAllReceipe();
 
    const searchLowerCase = search.toLowerCase();
 
-   const filterData = recipes?.filter(item => item.title.toLowerCase().includes(searchLowerCase));
+   const filterData = receipes?.filter(item => item.title.toLowerCase().includes(searchLowerCase));
 
    const handleDelete = (id) => {
       Swal.fire({
@@ -40,13 +40,13 @@ const RecipeList = () => {
                });
                handleRefresh()
             } catch (error) {
-               Swal.error(error)
+               alert(error)
             }
          }
       });
    }
 
-   if (!recipes) {
+   if (!receipes) {
       return <div className="flex justify-center items-center h-[50vh]">Loading........</div>
    }
 
